@@ -1,0 +1,66 @@
+# Cursor Rules for LangChain Demo (Python + TypeScript)
+
+These rules guide AI-assisted edits and reviews in this repo. Follow them to keep both implementations aligned and high quality.
+
+## Scope and Structure
+- Two parallel implementations: `python/`, `typescript/`.
+- Planning docs: `project_management/` (`ROADMAP.md`, `BACKLOG.md`).
+- Artifacts: `outputs/` (text + metadata). Keep it tidy and Windows-friendly.
+
+## General Engineering
+- Prefer small, incremental edits with clear intent and minimal unrelated churn.
+- Preserve existing indentation and formatting styles within each file.
+- Write clear, self-explanatory code and function/variable names; avoid abbreviations.
+- Add tests or checks when touching logic (slugging, file I/O, CLI parsing).
+- Never include secrets; use environment variables and `.env.example`.
+
+## Python Standards
+- Runtime: Python 3.10+.
+- Dependencies live in `python/requirements.txt` (pin or narrow ranges).
+- Use `pathlib` for file paths; write to `outputs/` with date/slug structure when feasible.
+- Handle missing `OPENAI_API_KEY` gracefully with helpful error messages.
+- Prefer `langchain` high-level primitives; keep prompts in `PromptTemplate`s.
+- Keep side-effectful scripts as CLIs (Typer recommended) rather than top-level execution.
+
+## TypeScript Standards
+- Runtime: Node 18+; strict TypeScript.
+- Dependencies managed via `typescript/package.json`.
+- Use `@langchain/openai` for models; use `dotenv` for env loading.
+- CLI via `commander` (or similar). Output to `outputs/` with slugged filenames.
+- Keep `tsconfig.json` strict; no implicit anys; enable `skipLibCheck` only for speed.
+
+## Prompting & LLM Usage
+- Keep prompts declarative and structured; avoid leaking credentials in logs.
+- Centralize adjustable params (temperature, model, max tokens) and document defaults.
+- Save metadata (inputs, params, timestamps) alongside outputs where possible.
+
+## Security and Compliance
+- Never print or commit API keys, tokens, or secrets.
+- Validate and sanitize any user-supplied paths or filenames.
+- Respect rate limits; avoid infinite loops or unbounded token usage.
+
+## Tooling, Lint, and Format
+- Python: prefer `black` + `isort` (optional) and basic `flake8`/`ruff` if added.
+- TypeScript: use ESLint + Prettier if configured; do not reformat unrelated code.
+- Keep config minimal and colocated; only introduce tools when needed by the roadmap.
+
+## Commits and Branching
+- Conventional commits (e.g., `feat:`, `fix:`, `chore:`, `docs:`).
+- Reference planning tasks when applicable (e.g., `feat: CLI supports --outline (P1)`).
+- Keep changes atomic; update docs (`README.md`, `ROADMAP.md`, `BACKLOG.md`) with scope shifts.
+
+## PR/Change Checklist
+- Code compiles and runs locally for the touched part (Python/TS).
+- Lints pass (if configured); no new warnings where avoidable.
+- Secrets are not logged or committed; `.env.example` updated if new vars are needed.
+- Docs and examples updated (USAGE/README snippets).
+
+## File and Path Conventions
+- Use slugs for filenames derived from titles: lowercase, alnum+`_`, trim leading/trailing `_`.
+- Organize outputs under `outputs/` (date/slug optional but preferred).
+- Do not write outside the workspace; avoid absolute paths.
+
+## When in Doubt
+- Prefer clarity over cleverness.
+- Align Python and TypeScript features to make comparisons fair.
+- If a decision impacts scope, reflect it in `project_management/ROADMAP.md`.
