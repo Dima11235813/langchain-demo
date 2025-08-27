@@ -1,0 +1,28 @@
+{
+  "name": "langchain-demo-ts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "dev": "tsx src/main.ts",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "langchain": "^0.2.10",
+    "openai": "^4.52.0",
+    "zod": "^3.23.8",
+    "dotenv": "^16.4.5",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "tsx": "^4.16.2",
+    "eslint": "^9.8.0",
+    "@types/node": "^20.14.9",
+    "@types/commander": "^2.12.5"
+  }
+}
+
+
